@@ -4,4 +4,4 @@ from .configuration import (  # noqa: F401
     add_need_type,
     get_need_types,
 )
-from .need import add_external_need, add_need, del_need, make_hashed_id  # noqa: F401
+from .need import add_external_need, add_need, apply_templates, del_need, make_hashed_id  # noqa: F401

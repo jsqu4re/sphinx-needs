@@ -12,7 +12,7 @@ from sphinx.application import Sphinx
 from sphinx.environment import BuildEnvironment
 from sphinx.util.docutils import SphinxDirective
 
-from sphinx_needs.api import add_need
+from sphinx_needs.api import add_need, apply_templates
 from sphinx_needs.api.exceptions import NeedsInvalidException
 from sphinx_needs.config import NEEDS_CONFIG, NeedsSphinxConfig
 from sphinx_needs.data import NeedsInfoType, SphinxNeedsData
@@ -384,6 +384,7 @@ def post_process_needs_data(app: Sphinx) -> None:
         check_links(needs, needs_config)
         create_back_links(needs, needs_config)
         process_constraints(needs, needs_config)
+        apply_templates(needs, app)
         needs_data.needs_is_post_processed = True
 
 

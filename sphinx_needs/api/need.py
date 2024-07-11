@@ -443,15 +443,6 @@ def add_need(
             need_content_context, needs_info["content"]
         )
 
-    if needs_info["template"]:
-        needs_info["content"] = content = _prepare_template(app, needs_info, "template")
-
-    if needs_info["pre_template"]:
-        needs_info["pre_content"] = _prepare_template(app, needs_info, "pre_template")
-
-    if needs_info["post_template"]:
-        needs_info["post_content"] = _prepare_template(app, needs_info, "post_template")
-
     SphinxNeedsData(env).get_or_create_needs()[need_id] = needs_info
 
     if needs_info["is_external"]:
@@ -697,6 +688,20 @@ def _prepare_template(app: Sphinx, needs_info: NeedsInfoType, template_key: str)
     new_content = template_obj.render(**needs_info, **needs_config.render_context)
 
     return new_content
+
+
+def apply_templates(
+    needs: dict[str, NeedsInfoType], app: Sphinx
+) -> None:
+    for need in needs.values():
+        if need["template"]:
+            need["content"] = _prepare_template(app, need, "template")
+
+        if need["pre_template"]:
+            need["pre_content"] = _prepare_template(app, need, "pre_template")
+
+        if need["post_template"]:
+            need["post_content"] = _prepare_template(app, need, "post_template")
 
 
 def _read_in_links(links_string: None | str | list[str]) -> list[str]:
